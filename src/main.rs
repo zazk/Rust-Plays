@@ -1,57 +1,71 @@
 mod strings;
 mod structs;
-use strings::*;
-
-#[derive(Debug)]
-enum Example {
-    Float(f64),
-    Int(i32),
-    Text(String),
-}
+mod vectors;
+use std::collections::HashMap;
 
 fn main() {
-    strings();
+    strings::strings();
     structs::main();
-
-    // Vectors
-    println!("\nVectors =========================");
-    let vectory = vec![1, 2, 3, 4];
-    for i in &vectory {
-        println!("My item in vector {}", i);
+    vectors::main();
+    println!("\nHashMap ===========================================");
+    let mut hm = HashMap::new();
+    hm.insert("random".to_string(), 12);
+    hm.insert(String::from("numerical"), 16);
+    for (k, v) in &hm {
+        println!("My HashMap: {}:{}", k, v);
     }
-    let mut vectory_class = Vec::new();
-    vectory_class.push(6);
-    vectory_class.push(7);
-    vectory_class.push(8);
-    vectory_class.push(9);
-    println!(
-        "vector_class:{:?} length:{} capacity:{} ",
-        vectory_class,
-        vectory_class.len(),
-        vectory_class.capacity()
-    );
-    vectory_class.push(11);
-    println!(
-        "vector_class:{:?} length:{} capacity:{} ",
-        vectory_class,
-        vectory_class.len(),
-        vectory_class.capacity()
-    );
+    match hm.get(&String::from("No key")) {
+        Some(&n) => println!("Matched {}", n),
+        _ => println!("Not matched"),
+    }
+    hm.remove(&"numerical".to_string());
 
-    println!("vector_class.pop():{:?}", vectory_class.pop());
-
-    let mut v: Vec<i32> = Vec::new();
-    for i in &v {
-        println!("Empty vector:{}", i);
+    let s = Some("c");
+    match s {
+        Some(i) => println!("Matched: {}", i),
+        _ => {}
     }
 
-    println!("v:{:?} length:{} capacity:{} ", v, v.len(), v.capacity());
-    println!("v.pop():{:?}", v.pop());
+    if let Some(i) = s {
+        println!("Matched: {}", i)
+    } else {
+        {}
+    }
 
-    let r = vec![
-        Example::Int(22),
-        Example::Float(12.2),
-        Example::Text("Hi Enum in vector".to_string()),
-    ];
-    println!("Vecto in Enum r:{:?}", r);
+    let mut so = Some(0);
+    loop {
+        match so {
+            Some(i) => {
+                if i > 19 {
+                    println!("Quit");
+                    so = None;
+                } else {
+                    println!("{}", i);
+                    so = Some(i + 2)
+                }
+            }
+            _ => {
+                break;
+            }
+        }
+    }
+
+    let mut son = Some(0);
+
+    while let Some(i) = son {
+        if i > 19 {
+            println!("Quit");
+            son = None;
+        } else {
+            println!("{}", i);
+            son = Some(i + 2)
+        }
+    }
+
+    let f = 24.4321_f32;
+    let i = f as u8;
+    let c = i as char;
+
+    println!("Casting {},{},{}--", f, i, c);
+    println!("Weird chars:{} {} {}", 255 as char, 44 as char, 45 as char);
 }

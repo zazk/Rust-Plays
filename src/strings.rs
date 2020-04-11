@@ -1,4 +1,4 @@
-pub fn strings() {
+pub fn main() {
     // Vectors
     println!("\nStrings =========================");
     let condition: bool = true;
